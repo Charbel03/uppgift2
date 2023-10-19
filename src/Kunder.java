@@ -11,6 +11,7 @@ public class Kunder {
     String personNumber;
     LocalDate localDate = LocalDate.now();
     Boolean isValidKund = false;
+    Boolean isKund = false;
     LocalDate localDateKund = null;
     String filePathKunder = "src/kunder.txt";
     String filePathPT = "src/PT.txt";
@@ -31,10 +32,10 @@ public class Kunder {
                 temp = temp.substring(12);
             }
             if (temp.contains(kund) || kund.equals(this.personNumber)){
+                isKund = true;
                 this.name = temp;
                 temp = bufferedReader.readLine();
                 localDateKund = LocalDate.parse(temp);
-              // txt = "Namn: " + this.name + "\tPersonNummer: " + this.personNumber + "\tDatum: " + localDate;
                 checkDate(localDateKund);
 
             break;
@@ -49,32 +50,36 @@ public class Kunder {
             System.out.println("IOException");
              }
 
-    if (localDateKund == null){
+
+    if (isKund == false){
         checkDate(localDateKund);
+    }
+        nollställ();
+
 
     }
 
-    }
+
     public void checkDate(LocalDate localDatekund){
 
 if (localDatekund == null){
         System.out.println("Personen finns inte i filen och har sålunda aldrig varit medlem och är obehörig");
-}else
-
-        if (ChronoUnit.DAYS.between(localDatekund, localDate) > 365){
+}else if (ChronoUnit.DAYS.between(localDatekund, localDate) > 365){
             System.out.println("Kunden är en före detta kund");
+            this.isKund = true;
+
         } else if (ChronoUnit.DAYS.between(localDatekund, localDate) <= 365) {
             System.out.println("Kunden är en nuvarande medlem ");
             Path p = Paths.get(filePathPT);
             txt = "Namn: " + this.name + "\tPersonNummer: " + this.personNumber + "\tDatum: " + localDate;
             this.isValidKund = true;
-            try {
-                FileWriter fileWriter = new FileWriter(filePathPT, true);
+            this.isKund = true;
+
+            try (FileWriter fileWriter = new FileWriter(filePathPT, true);){
+
 
                 fileWriter.write(txt);
                 fileWriter.write("\n");
-
-                fileWriter.close();
 
             } catch (IOException e) {
                 System.out.println("Kunde inte skapa filen: " + e.getMessage());
@@ -84,6 +89,11 @@ if (localDatekund == null){
         }
 
 
+    }
+
+    public void nollställ(){
+        this.localDateKund = null;
+        this.isKund = false;
 
     }
 

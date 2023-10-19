@@ -9,8 +9,8 @@ public class Main {
         Kunder k = new Kunder();
 
         while (true){
-
             try{
+            System.out.println("Skriv 'exit' för att avsluta");
             System.out.print("Skriv in namn eller person nummer: ");
             String kund = scanner.nextLine();
 
@@ -19,10 +19,13 @@ public class Main {
             }
             k.checkKunder(kund);
             }catch (Exception e){
-                System.out.println("Försök igen");
+                System.out.println("Error");
             }
+            System.out.print("\n");
+
         }
 
+// https://github.com/Charbel03/uppgift2
 
     }
 }

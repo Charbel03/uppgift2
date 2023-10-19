@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +27,6 @@ class KunderTest {
         x.checkDate(x.localDateKund);
         assertEquals("Namn: " + x.name + "\tPersonNummer: " + x.personNumber + "\tDatum: " + localDate,
                 x.txt);
-
     }
 
 
